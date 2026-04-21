@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prompt Generator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      text-align: center;
+      padding-top: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: white;
+      color: #333;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎯 Random Web Prompt</h1>
+<p id="output">Klik tombol</p>
+<button onclick="generate()">Generate</button>
+
+<script>
+const words1 = ["Website", "Landing Page", "UI App"];
+const words2 = ["Modern", "Dark", "Clean", "Futuristic"];
+const words3 = ["Startup", "Food", "Travel", "Gaming"];
+
+function generate() {
+  let w1 = words1[Math.floor(Math.random() * words1.length)];
+  let w2 = words2[Math.floor(Math.random() * words2.length)];
+  let w3 = words3[Math.floor(Math.random() * words3.length)];
+
+  document.getElementById("output").innerText =
+    `${w1} ${w2} untuk ${w3}`;
+}
+</script>
+
+</body>
+</html>
