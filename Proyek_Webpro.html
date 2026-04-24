@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeks Ketahanan Pangan Indonesia 2024–2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#2d4a1e;--forest-mid:#3d6128;--forest-light:#5a8a3a;--forest-pale:#e8f0e1;
+  --cream:#f5f2e8;--gold:#c9a84c;--gold-light:#e8d49a;
+  --text-dark:#2a3d1c;--text-mid:#4a6130;--text-muted:#7a9060;
+}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--cream);color:var(--text-dark)}
+.header{background:var(--forest);color:#fff;padding:0;text-align:center;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center}
+.header-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e3512 0%,#2d4a1e 40%,#3d6128 100%)}
+.header-content{position:relative;z-index:2;padding:2.5rem 2rem 2rem}
+.header-illus{position:absolute;bottom:0;width:100%;pointer-events:none;z-index:1}
+.header-illus-left{position:absolute;left:0;bottom:0;z-index:1;opacity:.55}
+.header-illus-right{position:absolute;right:0;bottom:0;z-index:1;opacity:.55;transform:scaleX(-1)}
+.header-eyebrow{font-family:'Source Serif 4',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);margin-bottom:.75rem}
+.header h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.2;color:#fff;max-width:680px;margin:0 auto .6rem}
+.header-sub{font-size:13px;color:rgba(255,255,255,.65);letter-spacing:.5px}
+.header-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:1rem}
+.header-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:11px;color:rgba(255,255,255,.8);letter-spacing:.5px}
+.tabs{display:flex;background:var(--forest-mid);padding:0 2rem;gap:0;overflow-x:auto}
+.tab-btn{font-family:'Source Serif 4',serif;font-size:13px;color:rgba(255,255,255,.65);background:none;border:none;padding:.85rem 1.4rem;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;letter-spacing:.3px}
+.tab-btn:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.06)}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold);background:rgba(255,255,255,.08)}
+.section{display:none;padding:2rem;animation:fadeIn .3s ease;max-width:1100px;margin:0 auto}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--forest);margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:2px solid var(--forest-pale)}
+.metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:1.5rem}
+.metric-card{background:#fff;border:1px solid #dce8cf;border-radius:10px;padding:1rem 1.1rem;text-align:center}
+.metric-card .label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem}
+.metric-card .value{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:600;color:var(--forest)}
+.metric-card .province{font-size:11px;color:var(--text-muted);margin-top:.2rem}
+.metric-card.high{border-top:3px solid var(--forest-light)}
+.metric-card.low{border-top:3px solid #c0392b}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:var(--forest);color:#fff;padding:.65rem .9rem;text-align:left;font-family:'Source Serif 4',serif;font-weight:400;letter-spacing:.5px;font-size:12px}
+tbody tr{border-bottom:1px solid var(--forest-pale)}
+tbody tr:hover{background:var(--forest-pale)}
+tbody td{padding:.6rem .9rem;color:var(--text-dark)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-high{background:#d4edca;color:#1e5c10}
+.badge-mid{background:#fff3cd;color:#7d5a0a}
+.badge-low{background:#fde0de;color:#8b1a1a}
+.search-bar{width:100%;padding:.65rem 1rem;border:1px solid #cdd9bf;border-radius:8px;font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-dark);background:#fff;margin-bottom:1rem;outline:none}
+.search-bar:focus{border-color:var(--forest-light);box-shadow:0 0 0 2px rgba(90,138,58,.15)}
+.sort-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.sort-btn{font-size:12px;padding:4px 12px;border:1px solid #cdd9bf;border-radius:20px;background:#fff;color:var(--text-mid);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .15s}
+.sort-btn:hover,.sort-btn.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+.chart-wrap{background:#fff;border:1px solid #dce8cf;border-radius:10px;padding:1.25rem;margin-bottom:1.5rem}
+.chart-title{font-size:13px;font-weight:600;color:var(--text-mid);margin-bottom:1rem;letter-spacing:.3px}
+.bar-item{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bar-label{font-size:12px;color:var(--text-mid);min-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;background:var(--forest-pale);border-radius:4px;height:18px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.bar-val{font-size:11px;font-weight:600;color:#fff}
+.bar-fill.green{background:var(--forest-light)}
+.bar-fill.amber{background:#d4960d}
+.bar-fill.red{background:#c0392b}
+.bar-year{font-size:10px;color:var(--text-muted);min-width:32px;text-align:right}
+.komoditas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
+.komoditas-card{background:#fff;border:1px solid #dce8cf;border-radius:10px;padding:1.1rem;cursor:pointer;transition:all .2s;position:relative}
+.komoditas-card:hover,.komoditas-card.active{border-color:var(--forest-light);background:var(--forest-pale);transform:translateY(-1px)}
+.komoditas-card .k-icon{font-size:2rem;margin-bottom:.4rem;display:block}
+.komoditas-card .k-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--forest);margin-bottom:.25rem}
+.komoditas-card .k-sub{font-size:11px;color:var(--text-muted)}
+.komoditas-detail{background:#fff;border:1px solid #dce8cf;border-radius:10px;padding:1.4rem;margin-bottom:1.5rem;display:none}
+.komoditas-detail.show{display:block;animation:fadeIn .25s ease}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:1rem}
+.detail-item{background:var(--forest-pale);border-radius:8px;padding:.8rem;text-align:center}
+.detail-item .d-label{font-size:11px;color:var(--text-muted);margin-bottom:.3rem;letter-spacing:.5px;text-transform:uppercase}
+.detail-item .d-val{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--forest);font-weight:600}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--forest-pale)}
+.tl-item{position:relative;margin-bottom:1.5rem}
+.tl-dot{position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--forest);border:2px solid var(--forest-pale)}
+.tl-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;color:var(--forest);margin-bottom:.3rem}
+.tl-text{font-size:13px;color:var(--text-mid);line-height:1.65}
+.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:1rem}
+.strategy-card{background:#fff;border:1px solid #dce8cf;border-radius:12px;padding:1.3rem;position:relative;overflow:hidden}
+.strategy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--forest-light)}
+.strategy-num{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--forest-pale);font-weight:700;line-height:1;margin-bottom:.4rem}
+.strategy-title{font-size:13px;font-weight:600;color:var(--forest);margin-bottom:.6rem;line-height:1.3}
+.strategy-text{font-size:12px;color:var(--text-muted);line-height:1.65}
+.footer{background:var(--forest);color:rgba(255,255,255,.55);text-align:center;padding:1rem;font-size:11px;letter-spacing:.5px}
+.highlight-box{background:var(--forest-pale);border-left:4px solid var(--forest);border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:13px;color:var(--text-mid);line-height:1.7}
+select{font-family:'Source Serif 4',serif;font-size:13px;padding:.5rem .8rem;border:1px solid #cdd9bf;border-radius:8px;color:var(--text-dark);background:#fff;cursor:pointer;margin-left:8px;outline:none}
+select:focus{border-color:var(--forest-light)}
+.legend-row{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);margin-bottom:12px;align-items:center}
+.legend-dot{width:12px;height:12px;border-radius:2px;display:inline-block;margin-right:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Badan Pangan Nasional · Analisis Data</div>
+  <h1>Indeks Ketahanan Pangan Indonesia 2024–2025</h1>
+  <div class="header-sub">34 Provinsi · Dimensi Ketersediaan, Akses, Pemanfaatan &amp; Keberlanjutan</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('ringkasan',this)">Ringkasan</button>
+  <button class="tab-btn" onclick="showTab('tabel',this)">Tabel IKP</button>
+  <button class="tab-btn" onclick="showTab('grafik',this)">Grafik Perbandingan</button>
+  <button class="tab-btn" onclick="showTab('komoditas',this)">Komoditas Pangan</button>
+  <button class="tab-btn" onclick="showTab('kesimpulan',this)">Kesimpulan &amp; Strategi</button>
+</div>
+
+<!-- RINGKASAN -->
+<div id="tab-ringkasan" class="section active">
+  <div class="metric-row">
+    <div class="metric-card high"><div class="label">IKP Tertinggi 2024</div><div class="value">85.34</div><div class="province">Jawa Tengah</div></div>
+    <div class="metric-card low"><div class="label">IKP Terendah 2024</div><div class="value">40.21</div><div class="province">Papua</div></div>
+    <div class="metric-card high"><div class="label">IKP Tertinggi 2025</div><div class="value">81.39</div><div class="province">Kalimantan Selatan</div></div>
+    <div class="metric-card low"><div class="label">IKP Terendah 2025</div><div class="value">57.18</div><div class="province">Maluku</div></div>
+  </div>
+
+  <div class="highlight-box">
+    Selama periode 2024–2025, beberapa provinsi seperti <strong>Bali, Jawa Tengah, DI Yogyakarta, Kalimantan Selatan, dan Sulawesi Selatan</strong> konsisten berada pada kategori ketahanan pangan tinggi. Sebaliknya, provinsi di wilayah timur seperti Papua, Papua Barat, Maluku, dan Maluku Utara masih berada pada kategori rendah secara konsisten.
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Top 8 Provinsi — IKP 2024 vs 2025</div>
+    <div class="legend-row">
+      <span><span class="legend-dot" style="background:#5a8a3a"></span>2024</span>
+      <span><span class="legend-dot" style="background:#5a8a3a;opacity:.55"></span>2025</span>
+    </div>
+    <div id="top-bars"></div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Bottom 5 Provinsi — IKP 2024 vs 2025</div>
+    <div class="legend-row">
+      <span><span class="legend-dot" style="background:#c0392b;opacity:.8"></span>2024</span>
+      <span><span class="legend-dot" style="background:#c0392b;opacity:.5"></span>2025</span>
+    </div>
+    <div id="bot-bars"></div>
+  </div>
+</div>
+
+<!-- TABEL -->
+<div id="tab-tabel" class="section">
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:1rem">
+    <input class="search-bar" id="tbl-search" style="flex:1;min-width:180px;margin-bottom:0" placeholder="Cari provinsi..." oninput="filterTable()">
+    <select onchange="filterCat(this.value)" id="cat-filter">
+      <option value="">Semua Kategori</option>
+      <option value="Tinggi">Tinggi</option>
+      <option value="Sedang">Sedang</option>
+      <option value="Rendah">Rendah</option>
+    </select>
+  </div>
+  <div class="sort-row">
+    <span style="font-size:12px;color:var(--text-muted);align-self:center">Urutkan:</span>
+    <button class="sort-btn active" onclick="sortTable('no',this)">No</button>
+    <button class="sort-btn" onclick="sortTable('prov',this)">Provinsi</button>
+    <button class="sort-btn" onclick="sortTable('2024',this)">IKP 2024 ↓</button>
+    <button class="sort-btn" onclick="sortTable('2025',this)">IKP 2025 ↓</button>
+    <button class="sort-btn" onclick="sortTable('delta',this)">Perubahan</button>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid #dce8cf">
+    <table id="main-table">
+      <thead><tr><th>No</th><th>Provinsi</th><th>IKP 2024</th><th>IKP 2025</th><th>Δ</th><th>Kategori 2025</th></tr></thead>
+      <tbody id="tbl-body"></tbody>
+    </table>
+  </div>
+  <div style="font-size:11px;color:var(--text-muted);margin-top:.75rem;text-align:right" id="tbl-count"></div>
+</div>
+
+<!-- GRAFIK -->
+<div id="tab-grafik" class="section">
+  <div class="chart-wrap">
+    <div class="chart-title">Perbandingan IKP 2024 vs 2025 — Semua Provinsi</div>
+    <div class="legend-row">
+      <span><span class="legend-dot" style="background:rgba(61,97,40,.75)"></span>IKP 2024</span>
+      <span><span class="legend-dot" style="background:rgba(201,168,76,.8)"></span>IKP 2025</span>
+    </div>
+    <div style="position:relative;height:480px">
+      <canvas id="barChart" role="img" aria-label="Grafik batang perbandingan IKP 2024 dan 2025 seluruh provinsi Indonesia">Perbandingan IKP 34 provinsi Indonesia tahun 2024 dan 2025.</canvas>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+    <div class="chart-wrap">
+      <div class="chart-title">Distribusi Kategori IKP 2025</div>
+      <div style="position:relative;height:220px">
+        <canvas id="pieChart" role="img" aria-label="Diagram lingkaran distribusi kategori IKP 2025">Distribusi provinsi berdasarkan kategori ketahanan pangan 2025.</canvas>
+      </div>
+      <div id="pie-legend" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--text-mid)"></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Rata-rata IKP per Pulau 2025</div>
+      <div style="position:relative;height:220px">
+        <canvas id="pulauChart" role="img" aria-label="Rata-rata IKP per pulau besar tahun 2025">Rata-rata IKP berdasarkan wilayah pulau besar di Indonesia tahun 2025.</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KOMODITAS -->
+<div id="tab-komoditas" class="section">
+  <div class="section-title">Visualisasi Data Komoditas Tanaman Pangan di Indonesia</div>
+  <div class="komoditas-grid" id="kom-grid"></div>
+  <div class="komoditas-detail" id="kom-detail"></div>
+</div>
+
+<!-- KESIMPULAN -->
+<div id="tab-kesimpulan" class="section">
+  <div class="section-title">Kesimpulan</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-title">Wilayah Stabil (Barat &amp; Tengah)</div>
+      <div class="tl-text">Beberapa provinsi seperti Bali, Jawa Tengah, DI Yogyakarta, Kalimantan Selatan, dan Sulawesi Selatan konsisten berada pada kategori ketahanan pangan tinggi, menunjukkan keberhasilan tiga aspek utama ketahanan pangan.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-title">Kesenjangan Antarwilayah</div>
+      <div class="tl-text">Provinsi di wilayah timur Indonesia — Papua, Papua Barat, Maluku, dan Maluku Utara — masih konsisten berada pada kategori rendah. Kesenjangan ini perlu diperhatikan terutama dalam pemerataan akses dan kualitas pemanfaatan pangan.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-title">Fokus Perbaikan</div>
+      <div class="tl-text">Pemerataan akses dan kualitas pemanfaatan pangan menjadi tantangan utama ke depan. Meskipun ketahanan pangan nasional sudah cukup baik, masih terdapat kesenjangan antar wilayah yang signifikan.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:2rem">Strategi Peningkatan Ketahanan Pangan Indonesia</div>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-num">1</div>
+      <div class="strategy-title">Peningkatan Produksi Pangan</div>
+      <div class="strategy-text">Penguatan produksi dalam negeri, khususnya di daerah dengan nilai ketahanan pangan rendah, melalui pengembangan sektor pertanian, pemanfaatan teknologi, dan peningkatan produktivitas lahan dan petani.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">2</div>
+      <div class="strategy-title">Perbaikan Distribusi &amp; Akses Pangan</div>
+      <div class="strategy-text">Peningkatan keterjangkauan pangan dengan memperbaiki sistem distribusi dan infrastruktur, terutama di wilayah terpencil. Pembangunan jalan, transportasi, serta stabilisasi harga pangan menjadi faktor penting.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">3</div>
+      <div class="strategy-title">Peningkatan Kualitas Konsumsi</div>
+      <div class="strategy-text">Edukasi kepada masyarakat mengenai pola konsumsi yang bergizi, beragam, dan seimbang. Peningkatan kualitas sanitasi dan keamanan pangan juga perlu diperhatikan agar pangan memberikan manfaat optimal bagi kesehatan.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">4</div>
+      <div class="strategy-title">Penanganan Wilayah Rentan</div>
+      <div class="strategy-text">Pemerintah perlu meningkatkan ketersediaan pangan di daerah yang masih memiliki nilai ketahanan pangan rendah melalui pengembangan sektor pertanian berbasis teknologi dan peningkatan produktivitas lahan.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">5</div>
+      <div class="strategy-title">Penguatan Kolaborasi</div>
+      <div class="strategy-text">Diperlukan sinergi antara pemerintah, masyarakat, dan sektor swasta dalam mendukung ketahanan pangan secara berkelanjutan. Dengan kerja sama yang baik, ketahanan pangan di Indonesia dapat meningkat secara merata dan stabil.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Sumber: Badan Pangan Nasional · Indeks Ketahanan Pangan 2024–2025 · Data diolah untuk keperluan analisis</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const raw = [
+  {no:1, prov:'Aceh',                       pulau:'Sumatera',   y24:51.96, y25:69.98},
+  {no:2, prov:'Sumatera Utara',             pulau:'Sumatera',   y24:57.67, y25:71.66},
+  {no:3, prov:'Sumatera Barat',             pulau:'Sumatera',   y24:84.32, y25:77.75},
+  {no:4, prov:'Riau',                       pulau:'Sumatera',   y24:70.62, y25:70.59},
+  {no:5, prov:'Jambi',                      pulau:'Sumatera',   y24:74.76, y25:76.40},
+  {no:6, prov:'Sumatera Selatan',           pulau:'Sumatera',   y24:74.67, y25:79.09},
+  {no:7, prov:'Bengkulu',                   pulau:'Sumatera',   y24:72.27, y25:69.88},
+  {no:8, prov:'Lampung',                    pulau:'Sumatera',   y24:60.55, y25:73.05},
+  {no:9, prov:'Kep. Bangka Belitung',       pulau:'Sumatera',   y24:66.27, y25:71.54},
+  {no:10,prov:'Kepulauan Riau',             pulau:'Sumatera',   y24:62.63, y25:73.19},
+  {no:11,prov:'DKI Jakarta',               pulau:'Jawa',       y24:85.13, y25:74.32},
+  {no:12,prov:'Jawa Barat',                pulau:'Jawa',       y24:62.97, y25:74.96},
+  {no:13,prov:'Jawa Tengah',               pulau:'Jawa',       y24:85.34, y25:77.72},
+  {no:14,prov:'DI Yogyakarta',             pulau:'Jawa',       y24:84.13, y25:77.46},
+  {no:15,prov:'Jawa Timur',               pulau:'Jawa',       y24:83.56, y25:75.60},
+  {no:16,prov:'Banten',                   pulau:'Jawa',       y24:63.42, y25:77.74},
+  {no:17,prov:'Bali',                     pulau:'Bali & NTB/T', y24:75.21, y25:79.89},
+  {no:18,prov:'Nusa Tenggara Barat',      pulau:'Bali & NTB/T', y24:75.98, y25:72.54},
+  {no:19,prov:'Nusa Tenggara Timur',      pulau:'Bali & NTB/T', y24:70.76, y25:58.24},
+  {no:20,prov:'Kalimantan Barat',         pulau:'Kalimantan',  y24:73.74, y25:71.31},
+  {no:21,prov:'Kalimantan Tengah',        pulau:'Kalimantan',  y24:70.16, y25:73.69},
+  {no:22,prov:'Kalimantan Selatan',       pulau:'Kalimantan',  y24:82.91, y25:81.39},
+  {no:23,prov:'Kalimantan Timur',         pulau:'Kalimantan',  y24:82.91, y25:80.97},
+  {no:24,prov:'Sulawesi Utara',           pulau:'Sulawesi',    y24:72.77, y25:70.53},
+  {no:25,prov:'Sulawesi Tengah',          pulau:'Sulawesi',    y24:76.32, y25:70.49},
+  {no:26,prov:'Sulawesi Selatan',         pulau:'Sulawesi',    y24:76.32, y25:79.99},
+  {no:27,prov:'Sulawesi Tenggara',        pulau:'Sulawesi',    y24:74.00, y25:67.11},
+  {no:28,prov:'Gorontalo',               pulau:'Sulawesi',    y24:65.47, y25:69.74},
+  {no:29,prov:'Sulawesi Barat',           pulau:'Sulawesi',    y24:75.91, y25:67.64},
+  {no:30,prov:'Maluku',                   pulau:'Maluku & Papua', y24:62.44, y25:57.18},
+  {no:31,prov:'Maluku Utara',             pulau:'Maluku & Papua', y24:63.44, y25:58.37},
+  {no:32,prov:'Papua Barat',              pulau:'Maluku & Papua', y24:51.36, y25:57.45},
+  {no:33,prov:'Papua',                    pulau:'Maluku & Papua', y24:40.21, y25:58.69},
+];
+
+const komoditas = [
+  {icon:'🌾',name:'Padi',        sub:'Tanaman utama',        tertinggi:'Jawa Timur',     prod_tertinggi:'9.270.435 ton', terendah:'Riau',         prod_terendah:'303 ton',    rata:'1.518.169 ton'},
+  {icon:'🌽',name:'Jagung',      sub:'Sumber karbohidrat',   tertinggi:'Jawa Timur',     prod_tertinggi:'5.400.000 ton', terendah:'Kep. Riau',    prod_terendah:'120 ton',    rata:'890.000 ton'},
+  {icon:'🍠',name:'Ubi Kayu',    sub:'Pangan lokal',         tertinggi:'Lampung',        prod_tertinggi:'3.200.000 ton', terendah:'Maluku Utara', prod_terendah:'80 ton',     rata:'520.000 ton'},
+  {icon:'🍌',name:'Pisang',      sub:'Buah utama',           tertinggi:'Jawa Timur',     prod_tertinggi:'1.700.000 ton', terendah:'Kep. Riau',    prod_terendah:'55 ton',     rata:'310.000 ton'},
+  {icon:'🥜',name:'Kedelai',     sub:'Protein nabati',       tertinggi:'Jawa Tengah',    prod_tertinggi:'650.000 ton',   terendah:'Papua',        prod_terendah:'10 ton',     rata:'88.000 ton'},
+  {icon:'🍚',name:'Sagu',        sub:'Pangan lokal Papua',   tertinggi:'Papua',          prod_tertinggi:'320.000 ton',   terendah:'Bali',         prod_terendah:'15 ton',     rata:'45.000 ton'},
+];
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function getCategory(v){ return v >= 72 ? 'Tinggi' : v >= 60 ? 'Sedang' : 'Rendah' }
+function getBadge(c){
+  const cls = {Tinggi:'high', Sedang:'mid', Rendah:'low'};
+  return `<span class="badge badge-${cls[c]}">${c}</span>`;
+}
+function getDelta(a, b){
+  const d = b - a;
+  const sign = d >= 0 ? '+' : '';
+  const color = d >= 0 ? '#1e5c10' : '#8b1a1a';
+  return `<span style="color:${color};font-weight:600">${sign}${d.toFixed(2)}</span>`;
+}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────────
+let chartsBuilt = false;
+function showTab(t, btn){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  btn.classList.add('active');
+  if(t === 'grafik' && !chartsBuilt){ chartsBuilt = true; setTimeout(buildCharts, 80); }
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+let sortKey = 'no', sortDir = 1, catFilter = '';
+function filterTable(){ buildTable(); }
+function filterCat(v){ catFilter = v; buildTable(); }
+function sortTable(k, btn){
+  if(sortKey === k) sortDir *= -1;
+  else { sortKey = k; sortDir = (k === '2024' || k === '2025' || k === 'delta') ? -1 : 1; }
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildTable();
+}
+function buildTable(){
+  const s = (document.getElementById('tbl-search').value || '').toLowerCase();
+  let d = raw.filter(r =>
+    r.prov.toLowerCase().includes(s) &&
+    (!catFilter || getCategory(r.y25) === catFilter)
+  );
+  d = [...d].sort((a, b) => {
+    let va, vb;
+    if(sortKey === 'no')    { va = a.no;  vb = b.no; }
+    else if(sortKey === 'prov')  { va = a.prov; vb = b.prov; }
+    else if(sortKey === '2024')  { va = a.y24;  vb = b.y24; }
+    else if(sortKey === '2025')  { va = a.y25;  vb = b.y25; }
+    else                         { va = a.y25 - a.y24; vb = b.y25 - b.y24; }
+    return va > vb ? sortDir : va < vb ? -sortDir : 0;
+  });
+  document.getElementById('tbl-body').innerHTML = d.map(r =>
+    `<tr>
+      <td>${r.no}</td>
+      <td style="font-weight:500">${r.prov}</td>
+      <td>${r.y24.toFixed(2)}</td>
+      <td>${r.y25.toFixed(2)}</td>
+      <td>${getDelta(r.y24, r.y25)}</td>
+      <td>${getBadge(getCategory(r.y25))}</td>
+    </tr>`
+  ).join('');
+  document.getElementById('tbl-count').textContent =
+    `Menampilkan ${d.length} dari ${raw.length} provinsi`;
+}
+buildTable();
+
+// ── SUMMARY BARS ──────────────────────────────────────────────────────────────
+function buildSummaryBars(){
+  const MAX = 100;
+  const top = [...raw].sort((a,b) => b.y25 - a.y25).slice(0,8);
+  const bot = [...raw].sort((a,b) => a.y25 - b.y25).slice(0,5);
+
+  document.getElementById('top-bars').innerHTML = top.map(r => `
+    <div class="bar-item">
+      <div class="bar-label">${r.prov}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+          <span class="bar-year">2024</span>
+          <div class="bar-track" style="flex:1">
+            <div class="bar-fill green" style="width:${(r.y24/MAX*100).toFixed(1)}%"><span class="bar-val">${r.y24.toFixed(1)}</span></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="bar-year">2025</span>
+          <div class="bar-track" style="flex:1">
+            <div class="bar-fill" style="background:#5a8a3a;opacity:.6;width:${(r.y25/MAX*100).toFixed(1)}%"><span class="bar-val">${r.y25.toFixed(1)}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('bot-bars').innerHTML = bot.map(r => `
+    <div class="bar-item">
+      <div class="bar-label">${r.prov}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+          <span class="bar-year">2024</span>
+          <div class="bar-track" style="flex:1">
+            <div class="bar-fill red" style="opacity:.8;width:${(r.y24/MAX*100).toFixed(1)}%"><span class="bar-val">${r.y24.toFixed(1)}</span></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="bar-year">2025</span>
+          <div class="bar-track" style="flex:1">
+            <div class="bar-fill red" style="opacity:.5;width:${(r.y25/MAX*100).toFixed(1)}%"><span class="bar-val">${r.y25.toFixed(1)}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+buildSummaryBars();
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+function buildCharts(){
+  const labels = raw.map(r => r.prov.length > 14 ? r.prov.slice(0,13) + '…' : r.prov);
+
+  // Bar chart
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {label:'IKP 2024', data: raw.map(r => r.y24), backgroundColor:'rgba(61,97,40,.75)', borderWidth:0},
+        {label:'IKP 2025', data: raw.map(r => r.y25), backgroundColor:'rgba(201,168,76,.8)', borderWidth:0}
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 9 }, maxRotation: 65, autoSkip: false } },
+        y: { min: 35, max: 95, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+
+  // Donut chart
+  const counts = {Tinggi:0, Sedang:0, Rendah:0};
+  raw.forEach(r => { counts[getCategory(r.y25)]++; });
+  new Chart(document.getElementById('pieChart'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(counts),
+      datasets: [{ data: Object.values(counts), backgroundColor: ['#5a8a3a','#d4960d','#c0392b'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+  });
+  document.getElementById('pie-legend').innerHTML = Object.entries(counts).map(([k,v]) =>
+    `<span style="display:flex;align-items:center;gap:6px">
+      <span style="width:12px;height:12px;border-radius:2px;background:${k==='Tinggi'?'#5a8a3a':k==='Sedang'?'#d4960d':'#c0392b'}"></span>
+      <span style="color:var(--text-mid)">${k}</span>
+      <strong style="color:var(--text-dark)">${v}</strong>
+    </span>`
+  ).join('');
+
+  // Pulau chart
+  const pulauMap = {};
+  raw.forEach(r => {
+    if(!pulauMap[r.pulau]) pulauMap[r.pulau] = [];
+    pulauMap[r.pulau].push(r.y25);
+  });
+  const pulauLabels = Object.keys(pulauMap);
+  const pulauAvg = pulauLabels.map(p => {
+    const arr = pulauMap[p];
+    return +(arr.reduce((s,v) => s+v, 0) / arr.length).toFixed(2);
+  });
+  new Chart(document.getElementById('pulauChart'), {
+    type: 'bar',
+    data: {
+      labels: pulauLabels,
+      datasets: [{ label:'Rata-rata IKP 2025', data: pulauAvg, backgroundColor: ['#5a8a3a','#3d6128','#c9a84c','#2d4a1e','#7aaa5a','#d4960d'], borderWidth:0 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { x: { min: 55, max: 85, ticks: { font: { size: 10 } } }, y: { ticks: { font: { size: 10 } } } }
+    }
+  });
+}
+
+// ── KOMODITAS ─────────────────────────────────────────────────────────────────
+document.getElementById('kom-grid').innerHTML = komoditas.map((k, i) =>
+  `<div class="komoditas-card" onclick="showKom(${i})" id="kcard-${i}">
+    <span class="k-icon">${k.icon}</span>
+    <div class="k-name">${k.name}</div>
+    <div class="k-sub">${k.sub}</div>
+  </div>`
+).join('');
+
+function showKom(i){
+  document.querySelectorAll('.komoditas-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('kcard-' + i).classList.add('active');
+  const k = komoditas[i];
+  const det = document.getElementById('kom-detail');
+  det.className = 'komoditas-detail show';
+  det.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem">
+      <span style="font-size:3rem">${k.icon}</span>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--forest);font-weight:600">${k.name}</div>
+        <div style="font-size:12px;color:var(--text-muted)">${k.sub}</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="d-label">Produksi Tertinggi</div>
+        <div class="d-val">${k.tertinggi}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">${k.prod_tertinggi}</div>
+      </div>
+      <div class="detail-item">
+        <div class="d-label">Produksi Terendah</div>
+        <div class="d-val">${k.terendah}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">${k.prod_terendah}</div>
+      </div>
+      <div class="detail-item">
+        <div class="d-label">Rata-rata Nasional</div>
+        <div class="d-val" style="font-size:.95rem">${k.rata}</div>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
