@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Ketahanan Pangan Indonesia</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Ketahanan Pangan Indonesia</h1>
+  <p>Indeks Ketahanan Pangan 2024–2025</p>
+</section>
+
+<!-- ================= TABEL ================= -->
+<section class="section-light">
+  <h2 class="center">Tabel Indeks Ketahanan Pangan 2024–2025</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>No</th><th>Provinsi</th><th>2024</th><th>2025</th>
+      </tr>
+
+      <tr><td>1</td><td>Aceh</td><td>73.94</td><td>69.99</td></tr>
+      <tr><td>2</td><td>Sumatera Utara</td><td>77.49</td><td>71.46</td></tr>
+      <tr><td>3</td><td>Sumatera Barat</td><td>84.32</td><td>77.72</td></tr>
+      <tr><td>4</td><td>Riau</td><td>70.42</td><td>70.41</td></tr>
+      <tr><td>5</td><td>Jambi</td><td>74.94</td><td>76.16</td></tr>
+      <tr><td>6</td><td>Sumatera Selatan</td><td>74.07</td><td>79.30</td></tr>
+      <tr><td>7</td><td>Bengkulu</td><td>73.39</td><td>69.88</td></tr>
+      <tr><td>8</td><td>Lampung</td><td>82.58</td><td>73.05</td></tr>
+      <tr><td>9</td><td>Bangka Belitung</td><td>70.21</td><td>78.19</td></tr>
+      <tr><td>10</td><td>Kepulauan Riau</td><td>66.29</td><td>71.95</td></tr>
+      <tr><td>11</td><td>DKI Jakarta</td><td>85.13</td><td>71.51</td></tr>
+      <tr><td>12</td><td>Jawa Barat</td><td>82.97</td><td>74.94</td></tr>
+      <tr><td>13</td><td>Jawa Tengah</td><td>85.34</td><td>73.73</td></tr>
+      <tr><td>14</td><td>DI Yogyakarta</td><td>84.15</td><td>77.43</td></tr>
+      <tr><td>15</td><td>Jawa Timur</td><td>83.86</td><td>72.66</td></tr>
+      <tr><td>16</td><td>Banten</td><td>79.25</td><td>77.78</td></tr>
+      <tr><td>17</td><td>Bali</td><td>79.25</td><td>79.88</td></tr>
+      <tr><td>18</td><td>NTB</td><td>78.44</td><td>74.69</td></tr>
+      <tr><td>19</td><td>NTT</td><td>70.91</td><td>58.24</td></tr>
+      <tr><td>20</td><td>Kalimantan Barat</td><td>73.94</td><td>71.51</td></tr>
+      <tr><td>21</td><td>Kalimantan Tengah</td><td>70.16</td><td>73.61</td></tr>
+      <tr><td>22</td><td>Kalimantan Selatan</td><td>82.95</td><td>81.98</td></tr>
+      <tr><td>23</td><td>Kalimantan Timur</td><td>82.95</td><td>80.81</td></tr>
+      <tr><td>24</td><td>Kalimantan Utara</td><td>75.77</td><td>72.55</td></tr>
+      <tr><td>25</td><td>Sulawesi Utara</td><td>76.32</td><td>72.49</td></tr>
+      <tr><td>26</td><td>Sulawesi Tengah</td><td>76.32</td><td>70.39</td></tr>
+      <tr><td>27</td><td>Sulawesi Selatan</td><td>83.82</td><td>74.29</td></tr>
+      <tr><td>28</td><td>Sulawesi Tenggara</td><td>76.68</td><td>67.55</td></tr>
+      <tr><td>29</td><td>Gorontalo</td><td>81.47</td><td>69.74</td></tr>
+      <tr><td>30</td><td>Sulawesi Barat</td><td>71.99</td><td>67.07</td></tr>
+      <tr><td>31</td><td>Maluku</td><td>62.68</td><td>57.17</td></tr>
+      <tr><td>32</td><td>Maluku Utara</td><td>61.44</td><td>58.27</td></tr>
+      <tr><td>33</td><td>Papua Barat</td><td>51.36</td><td>57.45</td></tr>
+      <tr><td>34</td><td>Papua</td><td>40.21</td><td>58.60</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= GRAFIK ================= -->
+<section class="section-light">
+  <h2 class="center">Grafik IKP</h2>
+  <canvas id="chart1"></canvas>
+  <canvas id="chart2"></canvas>
+</section>
+
+<!-- ================= KOMODITAS GRID ================= -->
+<section class="section-green">
+  <h2 class="center">Visualisasi Komoditas</h2>
+
+  <div class="komoditas-grid">
+    <div class="item">🌾<p>Padi</p></div>
+    <div class="item">🌽<p>Jagung</p></div>
+    <div class="item">🥔<p>Ubi Kayu</p></div>
+    <div class="item">🍠<p>Ubi Jalar</p></div>
+    <div class="item">🍌<p>Pisang</p></div>
+    <div class="item">🍚<p>Sagu</p></div>
+  </div>
+</section>
+
+<!-- ================= SLIDER ================= -->
+<section class="section-light">
+  <h2 class="center">Detail Komoditas</h2>
+
+  <div class="slider">
+    <div class="slide active">
+      <h3>Padi</h3>
+      <p>Produksi tertinggi: Jawa Timur (9.270.435)</p>
+      <p>Produksi terendah: Riau (305)</p>
+      <p>Rata-rata: 1.518.160</p>
+    </div>
+
+    <div class="slide">
+      <h3>Jagung</h3>
+      <p>Data produksi tersedia</p>
+    </div>
+
+    <div class="slide">
+      <h3>Ubi Kayu</h3>
+      <p>Data produksi tersedia</p>
+    </div>
+  </div>
+
+  <button onclick="prev()">◀</button>
+  <button onclick="next()">▶</button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
