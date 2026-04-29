@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide 2 – Ketahanan Pangan Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive-darkest: #2c2f1a;
+    --olive-dark:    #3d4a1f;
+    --olive:         #5a6e27;
+    --olive-mid:     #7a9132;
+    --olive-light:   #a8bf5a;
+    --olive-pale:    #d4e08a;
+    --olive-cream:   #f5f2e4;
+    --olive-cream2:  #ece8d4;
+    --gold:          #c8a84b;
+    --gold-light:    #e2c97e;
+    --text-dark:     #1e2210;
+    --text-mid:      #3a4218;
+    --white:         #ffffff;
+    --bar-2024:      #7a9132;
+    --bar-2025:      #c8a84b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--olive-cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  .slide {
+    min-height: 100vh;
+    padding: 60px 5vw 80px;
+    position: relative;
+  }
+
+  .slide::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 10%, rgba(90,110,39,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 10% 90%, rgba(200,168,75,.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 40px;
+  }
+  .section-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--olive-dark);
+    line-height: 1.15;
+  }
+  .section-title-block p {
+    font-size: .85rem; color: var(--olive-mid);
+    letter-spacing: .05em; margin-top: 4px;
+  }
+  .divider-line {
+    flex: 1; height: 2px;
+    background: linear-gradient(to right, var(--olive-mid), transparent);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+  @media(max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--white);
+    border: 1.5px solid var(--olive-cream2);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    box-shadow: 0 4px 24px rgba(44,47,26,.07);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(44,47,26,.12); }
+
+  .card-year {
+    display: inline-block;
+    font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .card-year.y24 { background: var(--olive-pale); color: var(--olive-dark); }
+  .card-year.y25 { background: #f0e4b8; color: #6b4e10; }
+
+  .rank-group { margin-bottom: 18px; }
+  .rank-label {
+    font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .rank-label .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .rank-label.top .dot { background: var(--olive-mid); }
+  .rank-label.bot .dot { background: var(--gold); }
+
+  .rank-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 12px; margin-bottom: 5px;
+    border-radius: 8px; font-size: .85rem;
+    transition: background .2s;
+  }
+  .rank-item:hover { background: var(--olive-cream); }
+  .rank-item .name { font-weight: 500; }
+  .rank-item .score {
+    font-weight: 700; font-size: .9rem;
+    padding: 2px 8px; border-radius: 6px;
+  }
+  .top .score { background: var(--olive-pale); color: var(--olive-dark); }
+  .bot .score { background: #f5e9c8; color: #7a5020; }
+
+  .chart-card { grid-column: 1 / -1; }
+
+  .chart-legend {
+    display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 500; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  .chart-container { overflow-x: auto; padding-bottom: 8px; }
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; min-width: 700px; padding: 0 4px 0; }
+
+  .bar-group {
+    display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 28px;
+  }
+  .bar-pair { display: flex; gap: 3px; align-items: flex-end; width: 100%; }
+
+  .bar {
+    flex: 1; border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    transition: opacity .2s;
+    position: relative; cursor: pointer;
+  }
+  .bar:hover { opacity: .82; }
+  .bar:hover::after {
+    content: attr(data-val);
+    position: absolute; top: -26px; left: 50%; transform: translateX(-50%);
+    background: var(--olive-dark); color: var(--white);
+    font-size: .68rem; padding: 3px 6px; border-radius: 4px;
+    white-space: nowrap; pointer-events: none;
+  }
+
+  .bar.y24 { background: var(--bar-2024); }
+  .bar.y25 { background: var(--bar-2025); }
+
+  .bar-label {
+    font-size: .6rem; text-align: center; margin-top: 6px;
+    color: var(--text-mid); word-break: break-word; line-height: 1.2;
+    max-width: 50px;
+  }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 20px; border-radius: 24px; border: 1.5px solid var(--olive-cream2);
+    background: var(--white); color: var(--olive-mid);
+    font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
+    cursor: pointer; transition: all .2s;
+  }
+  .tab-btn:hover { border-color: var(--olive-mid); color: var(--olive-dark); }
+  .tab-btn.active {
+    background: var(--olive-dark); color: var(--white);
+    border-color: var(--olive-dark);
+  }
+
+  .komoditas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+  .komoditas-card {
+    background: var(--white); border-radius: 16px;
+    border: 1.5px solid var(--olive-cream2);
+    padding: 22px; cursor: pointer;
+    transition: all .3s;
+    position: relative; overflow: hidden;
+  }
+  .komoditas-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(90,110,39,.06) 0%, transparent 60%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .komoditas-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(44,47,26,.13); }
+  .komoditas-card:hover::before { opacity: 1; }
+  .komoditas-card.active { border-color: var(--olive-mid); background: var(--olive-cream); }
+
+  .komoditas-emoji { font-size: 2.6rem; margin-bottom: 10px; display: block; }
+  .komoditas-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--olive-dark); margin-bottom: 12px;
+  }
+
+  .komoditas-detail {
+    display: none; margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--olive-cream2);
+    animation: fadeIn .3s ease;
+  }
+  .komoditas-card.active .komoditas-detail { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .8rem; margin-bottom: 8px; gap: 8px;
+  }
+  .stat-row .stat-label { color: var(--olive-mid); flex-shrink: 0; }
+  .stat-row .stat-val { font-weight: 600; color: var(--text-dark); text-align: right; }
+
+  .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--olive-cream2); }
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; min-width: 500px; }
+  thead tr { background: var(--olive-dark); color: var(--white); }
+  thead th { padding: 12px 14px; text-align: left; font-weight: 500; font-size: .78rem; letter-spacing: .04em; }
+  tbody tr { border-bottom: 1px solid var(--olive-cream2); transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--olive-cream); }
+  tbody td { padding: 9px 14px; color: var(--text-mid); }
+  .score-pill {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    font-weight: 600; font-size: .78rem;
+  }
+  .score-high { background: #d6ecb0; color: var(--olive-dark); }
+  .score-mid  { background: #f0e9c0; color: #6e5012; }
+  .score-low  { background: #fce8c8; color: #8a3a10; }
+
+  .section-gap { height: 60px; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--olive-cream2); }
+  ::-webkit-scrollbar-thumb { background: var(--olive-mid); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <div class="content">
+
+    <!-- TABEL IKP -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Tabel Indeks Ketahanan Pangan<br>2024–2025</h2>
+        <p>Skor IKP per Provinsi</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:40px;">
+      <div class="table-wrapper">
+        <table id="ikp-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Provinsi</th>
+              <th>IKP 2024</th>
+              <th>IKP 2025</th>
+              <th>Perubahan</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- IKP CARDS -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Indeks Ketahanan Pangan<br>2024 &amp; 2025</h2>
+        <p>Tertinggi &amp; Terendah per Tahun</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <span class="card-year y24">2024</span>
+        <div class="rank-group top">
+          <div class="rank-label top"><span class="dot"></span>Tertinggi</div>
+          <div class="rank-item top"><span class="name">Jawa Tengah</span><span class="score top">65.34</span></div>
+          <div class="rank-item top"><span class="name">DKI Jakarta</span><span class="score top">85.13</span></div>
+          <div class="rank-item top"><span class="name">Sumatera Barat</span><span class="score top">64.32</span></div>
+        </div>
+        <div class="rank-group bot">
+          <div class="rank-label bot"><span class="dot"></span>Terendah</div>
+          <div class="rank-item bot"><span class="name">Papua</span><span class="score bot">40.21</span></div>
+          <div class="rank-item bot"><span class="name">Papua Barat</span><span class="score bot">51.36</span></div>
+          <div class="rank-item bot"><span class="name">Maluku Utara</span><span class="score bot">61.44</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-year y25">2025</span>
+        <div class="rank-group top">
+          <div class="rank-label top"><span class="dot"></span>Tertinggi</div>
+          <div class="rank-item top"><span class="name">Kalimantan Selatan</span><span class="score top">81.393</span></div>
+          <div class="rank-item top"><span class="name">Kalimantan Timur</span><span class="score top">80.6176</span></div>
+          <div class="rank-item top"><span class="name">Bali</span><span class="score top">79.8891</span></div>
+        </div>
+        <div class="rank-group bot">
+          <div class="rank-label bot"><span class="dot"></span>Terendah</div>
+          <div class="rank-item bot"><span class="name">Maluku</span><span class="score bot">57.1795</span></div>
+          <div class="rank-item bot"><span class="name">Papua Barat</span><span class="score bot">57.454</span></div>
+          <div class="rank-item bot"><span class="name">Nusa Tenggara Timur</span><span class="score bot">58.2644</span></div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--bar-2024)"></div>IKP 2024</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--bar-2025)"></div>IKP 2025</div>
+        </div>
+        <div class="chart-container">
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KOMODITAS -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Visualisasi Data Komoditas<br>Tanaman Pangan di Indonesia</h2>
+        <p>Klik kartu untuk detail</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="tabs" id="komoditas-tabs">
+      <button class="tab-btn active" data-filter="all">Semua</button>
+      <button class="tab-btn" data-filter="pokok">Pokok</button>
+      <button class="tab-btn" data-filter="umbi">Umbi-umbian</button>
+      <button class="tab-btn" data-filter="kacang">Kacang-kacangan</button>
+    </div>
+
+    <div class="komoditas-grid" id="komoditas-grid"></div>
+
+    <div class="section-gap"></div>
+
+  </div>
+</div>
+
+<script>
+const ikpData = [
+  ["Aceh",                    69.96, 69.9984],
+  ["Sumatera Utara",          77.47, 73.5860],
+  ["Sumatera Barat",          84.72, 77.7336],
+  ["Riau",                    79.62, 70.4357],
+  ["Jambi",                   74.85, 76.1496],
+  ["Sumatera Selatan",        74.47, 79.0675],
+  ["Bengkulu",                76.97, 69.0861],
+  ["Lampung",                 80.55, 73.6053],
+  ["Kep. Bangka Belitung",    66.27, 71.5641],
+  ["DKI Jakarta",             85.13, 73.5386],
+  ["Jawa Barat",              65.97, 76.9436],
+  ["Jawa Tengah",             65.34, 75.7320],
+  ["DI Yogyakarta",           84.15, 77.4903],
+  ["Jawa Timur",              83.56, 73.4635],
+  ["Banten",                  72.25, 73.7602],
+  ["Bali",                    79.25, 79.8891],
+  ["Nusa Tenggara Barat",     70.76, 32.1444],
+  ["Nusa Tenggara Timur",     72.91, 58.2644],
+  ["Kalimantan Barat",        73.74, 74.1321],
+  ["Kalimantan Tengah",       79.10, 73.6693],
+  ["Kalimantan Selatan",      82.75, 81.9340],
+  ["Kalimantan Timur",        82.53, 80.6176],
+  ["Kalimantan Utara",        72.77, 72.5360],
+  ["Sulawesi Utara",          76.32, 72.4983],
+  ["Sulawesi Tengah",         76.32, 70.7960],
+  ["Sulawesi Selatan",        78.62, 74.4271],
+  ["Sulawesi Tenggara",       76.88, 67.1371],
+  ["Gorontalo",               65.47, 69.7436],
+  ["Sulawesi Barat",          76.91, 67.8746],
+  ["Maluku",                  62.06, 57.1795],
+  ["Maluku Utara",            61.44, 67.5675],
+  ["Papua Barat",             51.36, 57.4540],
+  ["Papua",                   40.21, 50.4875],
+];
+
+const komoditasData = [
+  { id:1, name:"Padi",         emoji:"🌾", filter:"pokok",  tertinggi:"Jawa Timur (9.270.435)", terendah:"Riau (305)",          rata:"1.318.169", trend:"+2.4% dari 2023" },
+  { id:2, name:"Jagung",       emoji:"🌽", filter:"pokok",  tertinggi:"Jawa Timur (5.142.837)", terendah:"DKI Jakarta (12)",    rata:"671.240",   trend:"+1.8% dari 2023" },
+  { id:3, name:"Ubi Kayu",     emoji:"🍠", filter:"umbi",   tertinggi:"Jawa Tengah (3.142.000)",terendah:"Kep. Riau (150)",     rata:"488.320",   trend:"-0.9% dari 2023" },
+  { id:4, name:"Ubi Jalar",    emoji:"🍠", filter:"umbi",   tertinggi:"Papua (287.345)",        terendah:"DKI Jakarta (8)",     rata:"52.160",    trend:"+0.5% dari 2023" },
+  { id:5, name:"Kedelai",      emoji:"🫘", filter:"kacang", tertinggi:"Jawa Timur (312.456)",   terendah:"DKI Jakarta (3)",     rata:"41.820",    trend:"-3.2% dari 2023" },
+  { id:6, name:"Kacang Tanah", emoji:"🥜", filter:"kacang", tertinggi:"Jawa Tengah (155.321)",  terendah:"Kep. Riau (20)",      rata:"22.540",    trend:"+1.1% dari 2023" },
+  { id:7, name:"Pisang",       emoji:"🍌", filter:"pokok",  tertinggi:"Jawa Timur (2.100.000)", terendah:"Gorontalo (4.200)",   rata:"310.000",   trend:"+3.1% dari 2023" },
+  { id:8, name:"Sagu",         emoji:"🌿", filter:"pokok",  tertinggi:"Papua (412.000)",        terendah:"Sulawesi Barat (300)",rata:"52.000",    trend:"+0.3% dari 2023" },
+];
+
+// TABLE
+function scoreClass(v) {
+  if (v >= 75) return 'score-high';
+  if (v >= 65) return 'score-mid';
+  return 'score-low';
+}
+const tbody = document.getElementById('table-body');
+ikpData.forEach((row, i) => {
+  const delta = row[2] - row[1];
+  const arrow = delta >= 0 ? '▲' : '▼';
+  const color = delta >= 0 ? 'var(--olive-mid)' : '#b85020';
+  tbody.innerHTML += `
+    <tr>
+      <td>${i+1}</td>
+      <td>${row[0]}</td>
+      <td><span class="score-pill ${scoreClass(row[1])}">${row[1].toFixed(2)}</span></td>
+      <td><span class="score-pill ${scoreClass(row[2])}">${row[2].toFixed(4)}</span></td>
+      <td style="color:${color};font-weight:600">${arrow} ${Math.abs(delta).toFixed(2)}</td>
+    </tr>`;
+});
+
+// BAR CHART
+const chartEl = document.getElementById('bar-chart');
+const maxVal = Math.max(...ikpData.map(r => Math.max(r[1], r[2])));
+const H = 180;
+ikpData.forEach(row => {
+  const h24 = Math.max(4, (row[1] / maxVal) * H);
+  const h25 = Math.max(4, (row[2] / maxVal) * H);
+  const shortName = row[0]
+    .replace('Kepulauan ','Kep. ')
+    .replace('Kalimantan ','Kal. ')
+    .replace('Sulawesi ','Sul. ')
+    .replace('Sumatera ','Sum. ')
+    .replace('Nusa Tenggara ','NT ');
+  chartEl.innerHTML += `
+    <div class="bar-group">
+      <div class="bar-pair">
+        <div class="bar y24" style="height:${h24}px" data-val="2024: ${row[1].toFixed(2)}"></div>
+        <div class="bar y25" style="height:${h25}px" data-val="2025: ${row[2].toFixed(4)}"></div>
+      </div>
+      <div class="bar-label">${shortName}</div>
+    </div>`;
+});
+
+// KOMODITAS
+function renderKomoditas(filter = 'all') {
+  const grid = document.getElementById('komoditas-grid');
+  grid.innerHTML = '';
+  komoditasData.filter(k => filter === 'all' || k.filter === filter).forEach(k => {
+    const div = document.createElement('div');
+    div.className = 'komoditas-card';
+    div.innerHTML = `
+      <span class="komoditas-emoji">${k.emoji}</span>
+      <div class="komoditas-name">${k.name}</div>
+      <div style="font-size:.78rem;color:var(--olive-mid)">Klik untuk detail ↓</div>
+      <div class="komoditas-detail">
+        <div class="stat-row"><span class="stat-label">🏆 Produksi tertinggi</span><span class="stat-val">${k.tertinggi}</span></div>
+        <div class="stat-row"><span class="stat-label">📉 Produksi terendah</span><span class="stat-val">${k.terendah}</span></div>
+        <div class="stat-row"><span class="stat-label">📊 Rata-rata produksi</span><span class="stat-val">${k.rata}</span></div>
+        <div class="stat-row"><span class="stat-label">📈 Tren YoY</span><span class="stat-val">${k.trend}</span></div>
+      </div>`;
+    div.addEventListener('click', () => div.classList.toggle('active'));
+    grid.appendChild(div);
+  });
+}
+
+renderKomoditas();
+
+document.getElementById('komoditas-tabs').addEventListener('click', e => {
+  if (!e.target.classList.contains('tab-btn')) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderKomoditas(e.target.dataset.filter);
+});
+</script>
+</body>
+</html>
