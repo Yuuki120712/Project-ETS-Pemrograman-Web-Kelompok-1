@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide 2 – Ketahanan Pangan Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive-darkest: #2c2f1a;
+    --olive-dark:    #3d4a1f;
+    --olive:         #5a6e27;
+    --olive-mid:     #7a9132;
+    --olive-light:   #a8bf5a;
+    --olive-pale:    #d4e08a;
+    --olive-cream:   #f5f2e4;
+    --olive-cream2:  #ece8d4;
+    --gold:          #c8a84b;
+    --gold-light:    #e2c97e;
+    --text-dark:     #1e2210;
+    --text-mid:      #3a4218;
+    --white:         #ffffff;
+    --bar-2024:      #7a9132;
+    --bar-2025:      #c8a84b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--olive-cream); color: var(--text-dark); overflow-x: hidden; }
+  .slide { min-height: 100vh; padding: 60px 5vw 80px; position: relative; }
+  .slide::before {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 80% 10%, rgba(90,110,39,.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 10% 90%, rgba(200,168,75,.10) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+  .section-header { display: flex; align-items: center; gap: 18px; margin-bottom: 40px; }
+  .section-title-block h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--olive-dark); line-height: 1.15; }
+  .section-title-block p { font-size: .85rem; color: var(--olive-mid); letter-spacing: .05em; margin-top: 4px; }
+  .divider-line { flex: 1; height: 2px; background: linear-gradient(to right, var(--olive-mid), transparent); }
+  .card { background: var(--white); border: 1.5px solid var(--olive-cream2); border-radius: 16px; padding: 28px 28px 24px; box-shadow: 0 4px 24px rgba(44,47,26,.07); transition: transform .3s, box-shadow .3s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(44,47,26,.12); }
+  .card-year { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .1em; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; text-transform: uppercase; }
+  .card-year.y24 { background: var(--olive-pale); color: var(--olive-dark); }
+  .card-year.y25 { background: #f0e4b8; color: #6b4e10; }
+
+  .four-chart-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+  @media(max-width: 900px) { .four-chart-grid { grid-template-columns: 1fr 1fr; } }
+  @media(max-width: 500px) { .four-chart-grid { grid-template-columns: 1fr; } }
+  .mini-chart-card { padding: 20px 16px 16px; }
+
+  .chart-legend { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 500; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 20px; border-radius: 24px; border: 1.5px solid var(--olive-cream2); background: var(--white); color: var(--olive-mid); font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+  .tab-btn:hover { border-color: var(--olive-mid); color: var(--olive-dark); }
+  .tab-btn.active { background: var(--olive-dark); color: var(--white); border-color: var(--olive-dark); }
+
+  .komoditas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .komoditas-card { background: var(--white); border-radius: 16px; border: 1.5px solid var(--olive-cream2); padding: 22px; cursor: pointer; transition: all .3s; position: relative; overflow: hidden; }
+  .komoditas-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(90,110,39,.06) 0%, transparent 60%); opacity: 0; transition: opacity .3s; }
+  .komoditas-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(44,47,26,.13); }
+  .komoditas-card:hover::before { opacity: 1; }
+  .komoditas-card.active { border-color: var(--olive-mid); background: var(--olive-cream); }
+  .komoditas-icon { width: 56px; height: 56px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+  .komoditas-icon svg { width: 100%; height: 100%; fill: var(--olive-mid); }
+  .komoditas-card.active .komoditas-icon svg { fill: var(--olive-dark); }
+  .komoditas-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--olive-dark); margin-bottom: 12px; }
+  .komoditas-detail { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--olive-cream2); animation: fadeIn .3s ease; }
+  .komoditas-card.active .komoditas-detail { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .stat-row { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; margin-bottom: 8px; gap: 8px; }
+  .stat-row .stat-label { color: var(--olive-mid); flex-shrink: 0; }
+  .stat-row .stat-val { font-weight: 600; color: var(--text-dark); text-align: right; }
+
+  .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--olive-cream2); }
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; min-width: 500px; }
+  thead tr { background: var(--olive-dark); color: var(--white); }
+  thead th { padding: 12px 14px; text-align: left; font-weight: 500; font-size: .78rem; letter-spacing: .04em; }
+  tbody tr { border-bottom: 1px solid var(--olive-cream2); transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--olive-cream); }
+  tbody td { padding: 9px 14px; color: var(--text-mid); }
+  .score-pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-weight: 600; font-size: .78rem; }
+  .score-high { background: #d6ecb0; color: var(--olive-dark); }
+  .score-mid  { background: #f0e9c0; color: #6e5012; }
+  .score-low  { background: #fce8c8; color: #8a3a10; }
+  .section-gap { height: 60px; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--olive-cream2); }
+  ::-webkit-scrollbar-thumb { background: var(--olive-mid); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="content">
+
+    <!-- TABEL IKP -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Tabel Indeks Ketahanan Pangan<br>2024–2025</h2>
+        <p>Skor IKP per Provinsi</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="card" style="margin-bottom:40px;">
+      <div class="table-wrapper">
+        <table id="ikp-table">
+          <thead><tr><th>No</th><th>Provinsi</th><th>IKP 2024</th><th>IKP 2025</th><th>Perubahan</th></tr></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4 BAR CHARTS -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Indeks Ketahanan Pangan<br>2024 &amp; 2025</h2>
+        <p>Tertinggi &amp; Terendah per Tahun</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="four-chart-grid">
+      <div class="card mini-chart-card">
+        <span class="card-year y24">2024 – Tertinggi</span>
+        <svg id="bc-24-top" viewBox="0 0 300 210" style="width:100%;display:block;margin-top:8px;"></svg>
+      </div>
+      <div class="card mini-chart-card">
+        <span class="card-year y24">2024 – Terendah</span>
+        <svg id="bc-24-bot" viewBox="0 0 300 210" style="width:100%;display:block;margin-top:8px;"></svg>
+      </div>
+      <div class="card mini-chart-card">
+        <span class="card-year y25">2025 – Tertinggi</span>
+        <svg id="bc-25-top" viewBox="0 0 300 210" style="width:100%;display:block;margin-top:8px;"></svg>
+      </div>
+      <div class="card mini-chart-card">
+        <span class="card-year y25">2025 – Terendah</span>
+        <svg id="bc-25-bot" viewBox="0 0 300 210" style="width:100%;display:block;margin-top:8px;"></svg>
+      </div>
+    </div>
+
+    <!-- KOMODITAS -->
+    <div class="section-header">
+      <div class="section-title-block">
+        <h2>Visualisasi Data Komoditas<br>Tanaman Pangan di Indonesia</h2>
+        <p>Klik kartu untuk detail</p>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="tabs" id="komoditas-tabs">
+      <button class="tab-btn active" data-filter="all">Semua</button>
+      <button class="tab-btn" data-filter="pokok">Pokok</button>
+      <button class="tab-btn" data-filter="umbi">Umbi-umbian</button>
+      <button class="tab-btn" data-filter="kacang">Kacang-kacangan</button>
+    </div>
+    <div class="komoditas-grid" id="komoditas-grid"></div>
+    <div class="section-gap"></div>
+
+  </div>
+</div>
+
+<script>
+const ikpData = [
+  ["Aceh",                 69.96, 69.9984],
+  ["Sumatera Utara",       77.47, 73.5860],
+  ["Sumatera Barat",       84.72, 77.7336],
+  ["Riau",                 79.62, 70.4357],
+  ["Jambi",                74.85, 76.1496],
+  ["Sumatera Selatan",     74.47, 79.0675],
+  ["Bengkulu",             76.97, 69.0861],
+  ["Lampung",              80.55, 73.6053],
+  ["Kep. Bangka Belitung", 66.27, 71.5641],
+  ["DKI Jakarta",          85.13, 73.5386],
+  ["Jawa Barat",           65.97, 76.9436],
+  ["Jawa Tengah",          65.34, 75.7320],
+  ["DI Yogyakarta",        84.15, 77.4903],
+  ["Jawa Timur",           83.56, 73.4635],
+  ["Banten",               72.25, 73.7602],
+  ["Bali",                 79.25, 79.8891],
+  ["Nusa Tenggara Barat",  70.76, 32.1444],
+  ["Nusa Tenggara Timur",  72.91, 58.2644],
+  ["Kalimantan Barat",     73.74, 74.1321],
+  ["Kalimantan Tengah",    79.10, 73.6693],
+  ["Kalimantan Selatan",   82.75, 81.9340],
+  ["Kalimantan Timur",     82.53, 80.6176],
+  ["Kalimantan Utara",     72.77, 72.5360],
+  ["Sulawesi Utara",       76.32, 72.4983],
+  ["Sulawesi Tengah",      76.32, 70.7960],
+  ["Sulawesi Selatan",     78.62, 74.4271],
+  ["Sulawesi Tenggara",    76.88, 67.1371],
+  ["Gorontalo",            65.47, 69.7436],
+  ["Sulawesi Barat",       76.91, 67.8746],
+  ["Maluku",               62.06, 57.1795],
+  ["Maluku Utara",         61.44, 67.5675],
+  ["Papua Barat",          51.36, 57.4540],
+  ["Papua",                40.21, 50.4875],
+];
+
+const silhouettes = {
+  padi: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="49" y="30" width="2" height="65" rx="1"/>
+    <ellipse cx="50" cy="22" rx="6" ry="10"/>
+    <ellipse cx="44" cy="28" rx="5" ry="8" transform="rotate(-20 44 28)"/>
+    <ellipse cx="56" cy="28" rx="5" ry="8" transform="rotate(20 56 28)"/>
+    <ellipse cx="41" cy="36" rx="4" ry="7" transform="rotate(-30 41 36)"/>
+    <ellipse cx="59" cy="36" rx="4" ry="7" transform="rotate(30 59 36)"/>
+    <path d="M50 55 Q35 50 28 42" stroke-width="2" fill="none" stroke="currentColor"/>
+    <path d="M50 65 Q65 58 72 48" stroke-width="2" fill="none" stroke="currentColor"/>
+  </svg>`,
+  jagung: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="50" cy="48" rx="12" ry="28"/>
+    <ellipse cx="50" cy="28" rx="8" ry="4"/><ellipse cx="50" cy="36" rx="10" ry="4"/>
+    <ellipse cx="50" cy="44" rx="11" ry="4"/><ellipse cx="50" cy="52" rx="11" ry="4"/>
+    <ellipse cx="50" cy="60" rx="10" ry="4"/><ellipse cx="50" cy="68" rx="7" ry="4"/>
+    <path d="M50 20 Q55 14 58 8" stroke-width="1.5" fill="none" stroke="currentColor"/>
+    <path d="M50 20 Q52 13 54 7" stroke-width="1.5" fill="none" stroke="currentColor"/>
+    <path d="M50 20 Q48 13 46 7" stroke-width="1.5" fill="none" stroke="currentColor"/>
+    <path d="M38 55 Q25 45 20 30" stroke-width="2.5" fill="none" stroke="currentColor"/>
+    <rect x="49" y="76" width="2" height="18" rx="1"/>
+  </svg>`,
+  ubiKayu: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="50" cy="62" rx="22" ry="14" transform="rotate(-10 50 62)"/>
+    <ellipse cx="30" cy="68" rx="10" ry="7" transform="rotate(-20 30 68)"/>
+    <ellipse cx="70" cy="65" rx="9" ry="6" transform="rotate(15 70 65)"/>
+    <path d="M50 48 L50 30 Q50 20 45 15" stroke-width="3" fill="none" stroke="currentColor" stroke-linecap="round"/>
+    <path d="M45 15 Q30 10 22 18 Q30 22 45 15Z"/>
+    <path d="M45 15 Q42 5 50 2 Q50 10 45 15Z"/>
+    <path d="M45 15 Q55 8 60 14 Q52 18 45 15Z"/>
+    <path d="M50 76 Q55 82 52 88" stroke-width="1.5" fill="none" stroke="currentColor"/>
+    <path d="M35 72 Q30 80 32 86" stroke-width="1.5" fill="none" stroke="currentColor"/>
+  </svg>`,
+  ubiJalar: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="50" cy="60" rx="20" ry="16"/>
+    <ellipse cx="28" cy="65" rx="10" ry="8" transform="rotate(-15 28 65)"/>
+    <ellipse cx="72" cy="63" rx="9" ry="7" transform="rotate(10 72 63)"/>
+    <path d="M50 44 Q46 35 40 28 Q35 22 38 16" stroke-width="2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+    <path d="M38 16 Q30 10 28 16 Q30 22 38 16Z"/>
+    <path d="M38 16 Q42 8 48 14 Q44 20 38 16Z"/>
+    <path d="M50 30 Q56 24 60 28 Q56 34 50 30Z"/>
+  </svg>`,
+  kedelai: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 90 L50 20" stroke-width="2.5" fill="none" stroke="currentColor" stroke-linecap="round"/>
+    <rect x="34" y="25" width="18" height="9" rx="4.5" transform="rotate(-15 34 25)"/>
+    <rect x="48" y="35" width="18" height="9" rx="4.5" transform="rotate(10 48 35)"/>
+    <rect x="34" y="48" width="18" height="9" rx="4.5" transform="rotate(-20 34 48)"/>
+    <rect x="50" y="55" width="16" height="9" rx="4.5" transform="rotate(15 50 55)"/>
+    <rect x="36" y="65" width="17" height="9" rx="4.5" transform="rotate(-10 36 65)"/>
+    <path d="M50 30 Q38 24 34 28 Q40 34 50 30Z"/>
+    <path d="M50 30 Q56 22 62 26 Q58 32 50 30Z"/>
+    <path d="M50 50 Q36 44 32 50 Q38 56 50 50Z"/>
+  </svg>`,
+  kacangTanah: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M32 50 Q28 40 34 32 Q40 25 50 26 Q60 25 66 32 Q72 40 68 50 Q72 60 66 68 Q60 75 50 74 Q40 75 34 68 Q28 60 32 50Z"/>
+    <path d="M32 50 Q40 48 50 50 Q60 48 68 50" stroke-width="1.5" fill="none" stroke="currentColor" opacity="0.4"/>
+    <circle cx="42" cy="38" r="2.5" opacity="0.3"/><circle cx="58" cy="38" r="2.5" opacity="0.3"/>
+    <circle cx="38" cy="52" r="2" opacity="0.3"/><circle cx="62" cy="52" r="2" opacity="0.3"/>
+    <circle cx="42" cy="64" r="2.5" opacity="0.3"/><circle cx="58" cy="64" r="2.5" opacity="0.3"/>
+    <path d="M50 74 L50 86 Q46 90 44 88" stroke-width="1.5" fill="none" stroke="currentColor"/>
+    <path d="M50 82 Q54 86 56 84" stroke-width="1.5" fill="none" stroke="currentColor"/>
+  </svg>`,
+  pisang: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 L50 40" stroke-width="3" fill="none" stroke="currentColor" stroke-linecap="round"/>
+    <path d="M50 30 Q62 28 68 22 Q66 38 54 40 Q50 38 50 30Z"/>
+    <path d="M50 38 Q64 36 72 32 Q68 48 56 50 Q50 48 50 38Z"/>
+    <path d="M50 46 Q62 44 70 42 Q66 56 54 58 Q50 56 50 46Z"/>
+    <path d="M50 54 Q60 52 66 52 Q62 64 52 66 Q50 64 50 54Z"/>
+    <path d="M38 30 Q26 28 20 22 Q22 38 34 40 Q38 38 38 30Z" transform="scale(-1,1) translate(-100,0)"/>
+    <path d="M38 38 Q24 36 16 32 Q20 48 32 50 Q38 48 38 38Z" transform="scale(-1,1) translate(-100,0)"/>
+    <path d="M50 70 Q52 78 48 84" stroke-width="2" fill="none" stroke="currentColor"/>
+    <ellipse cx="50" cy="86" rx="6" ry="8" transform="rotate(10 50 86)"/>
+  </svg>`,
+  sagu: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect x="44" y="40" width="12" height="52" rx="4"/>
+    <path d="M50 40 Q42 28 28 22 Q36 32 50 40Z"/>
+    <path d="M50 40 Q38 24 30 12 Q40 26 50 40Z"/>
+    <path d="M50 40 Q50 24 50 10 Q52 26 50 40Z"/>
+    <path d="M50 40 Q62 24 70 12 Q60 26 50 40Z"/>
+    <path d="M50 40 Q64 28 78 22 Q66 32 50 40Z"/>
+    <path d="M50 40 Q44 34 36 30" stroke-width="1" fill="none" stroke="currentColor" opacity="0.4"/>
+    <path d="M50 40 Q56 34 64 30" stroke-width="1" fill="none" stroke="currentColor" opacity="0.4"/>
+    <line x1="44" y1="55" x2="56" y2="55" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+    <line x1="44" y1="65" x2="56" y2="65" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+    <line x1="44" y1="75" x2="56" y2="75" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+  </svg>`,
+};
+
+const komoditasData = [
+  { id:1, name:"Padi",         svgKey:"padi",        filter:"pokok",  tertinggi:"Jawa Timur (9.270.435)",  terendah:"Riau (305)",           rata:"1.318.169" },
+  { id:2, name:"Jagung",       svgKey:"jagung",      filter:"pokok",  tertinggi:"Jawa Timur (5.142.837)",  terendah:"DKI Jakarta (12)",     rata:"671.240"   },
+  { id:3, name:"Ubi Kayu",     svgKey:"ubiKayu",     filter:"umbi",   tertinggi:"Jawa Tengah (3.142.000)", terendah:"Kep. Riau (150)",      rata:"488.320"   },
+  { id:4, name:"Ubi Jalar",    svgKey:"ubiJalar",    filter:"umbi",   tertinggi:"Papua (287.345)",         terendah:"DKI Jakarta (8)",      rata:"52.160"    },
+  { id:5, name:"Kedelai",      svgKey:"kedelai",     filter:"kacang", tertinggi:"Jawa Timur (312.456)",    terendah:"DKI Jakarta (3)",      rata:"41.820"    },
+  { id:6, name:"Kacang Tanah", svgKey:"kacangTanah", filter:"kacang", tertinggi:"Jawa Tengah (155.321)",   terendah:"Kep. Riau (20)",       rata:"22.540"    },
+  { id:7, name:"Pisang",       svgKey:"pisang",      filter:"pokok",  tertinggi:"Jawa Timur (2.100.000)",  terendah:"Gorontalo (4.200)",    rata:"310.000"   },
+  { id:8, name:"Sagu",         svgKey:"sagu",        filter:"pokok",  tertinggi:"Papua (412.000)",         terendah:"Sulawesi Barat (300)", rata:"52.000"    },
+];
+
+// ── TABEL ─────────────────────────────────────────────────────────────────────
+function scoreClass(v) {
+  if (v >= 75) return 'score-high';
+  if (v >= 65) return 'score-mid';
+  return 'score-low';
+}
+const tbody = document.getElementById('table-body');
+ikpData.forEach((row, i) => {
+  const delta = row[2] - row[1];
+  const arrow = delta >= 0 ? '▲' : '▼';
+  const color = delta >= 0 ? 'var(--olive-mid)' : '#b85020';
+  tbody.innerHTML += `<tr>
+    <td>${i+1}</td><td>${row[0]}</td>
+    <td><span class="score-pill ${scoreClass(row[1])}">${row[1].toFixed(2)}</span></td>
+    <td><span class="score-pill ${scoreClass(row[2])}">${row[2].toFixed(4)}</span></td>
+    <td style="color:${color};font-weight:600">${arrow} ${Math.abs(delta).toFixed(2)}</td>
+  </tr>`;
+});
+
+// ── 4 MINI BAR CHARTS ────────────────────────────────────────────────────────
+const sorted2024 = [...ikpData].sort((a, b) => b[1] - a[1]);
+const sorted2025 = [...ikpData].sort((a, b) => b[2] - a[2]);
+
+const sets = [
+  { id:'bc-24-top', data: sorted2024.slice(0, 3).map(r => [r[0], r[1]]),            color:'#7a9132' },
+  { id:'bc-24-bot', data: sorted2024.slice(-3).reverse().map(r => [r[0], r[1]]),    color:'#c8a84b' },
+  { id:'bc-25-top', data: sorted2025.slice(0, 3).map(r => [r[0], r[2]]),            color:'#7a9132' },
+  { id:'bc-25-bot', data: sorted2025.slice(-3).reverse().map(r => [r[0], r[2]]),    color:'#c8a84b' },
+];
+
+function drawMiniBar(id, items, color) {
+  const W=300, H=210, pL=54, pR=12, pT=28, pB=58;
+  const cW=W-pL-pR, cH=H-pT-pB;
+  const vals = items.map(i => i[1]);
+  const minV = Math.floor(Math.min(...vals) / 10) * 10;
+  const maxV = Math.ceil(Math.max(...vals) / 10) * 10 + 5;
+  function fy(v) { return pT + (maxV - v) / (maxV - minV) * cH; }
+  const bw = (cW / items.length) * 0.52;
+  let h = '';
+  for (let t = minV; t <= maxV; t += 10) {
+    const y = fy(t);
+    h += `<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="#ece8d4" stroke-width="1"/>`;
+    h += `<text x="${pL-5}" y="${y+3.5}" text-anchor="end" fill="#7a9132" font-size="9" font-family="DM Sans,sans-serif">${t}</text>`;
+  }
+  items.forEach((item, i) => {
+    const cx = pL + (cW / items.length) * i + (cW / items.length) / 2;
+    const x  = cx - bw / 2;
+    const by = fy(minV);
+    const bh = by - fy(item[1]);
+    h += `<rect x="${x}" y="${fy(item[1])}" width="${bw}" height="${bh}" rx="4" fill="${color}"><title>${item[0]}: ${item[1].toFixed(2)}</title></rect>`;
+    h += `<text x="${cx}" y="${fy(item[1])-5}" text-anchor="middle" fill="${color}" font-size="9" font-family="DM Sans,sans-serif" font-weight="700">${item[1].toFixed(1)}</text>`;
+    const words = item[0].split(' ');
+    if (words.length <= 2) {
+      h += `<text x="${cx}" y="${by+14}" text-anchor="middle" fill="#3a4218" font-size="9" font-family="DM Sans,sans-serif" font-weight="600">${item[0]}</text>`;
+    } else {
+      const mid = Math.ceil(words.length / 2);
+      h += `<text x="${cx}" y="${by+13}" text-anchor="middle" fill="#3a4218" font-size="8.5" font-family="DM Sans,sans-serif" font-weight="600"><tspan x="${cx}" dy="0">${words.slice(0,mid).join(' ')}</tspan><tspan x="${cx}" dy="11">${words.slice(mid).join(' ')}</tspan></text>`;
+    }
+  });
+  h += `<line x1="${pL}" y1="${pT}" x2="${pL}" y2="${fy(minV)}" stroke="#3d4a1f" stroke-width="1.5"/>`;
+  h += `<line x1="${pL}" y1="${fy(minV)}" x2="${W-pR}" y2="${fy(minV)}" stroke="#3d4a1f" stroke-width="1.5"/>`;
+  document.getElementById(id).innerHTML = h;
+}
+
+sets.forEach(s => drawMiniBar(s.id, s.data, s.color));
+
+// ── KOMODITAS ─────────────────────────────────────────────────────────────────
+function renderKomoditas(filter = 'all') {
+  const grid = document.getElementById('komoditas-grid');
+  grid.innerHTML = '';
+  komoditasData.filter(k => filter === 'all' || k.filter === filter).forEach(k => {
+    const div = document.createElement('div');
+    div.className = 'komoditas-card';
+    div.innerHTML = `
+      <div class="komoditas-icon">${silhouettes[k.svgKey]}</div>
+      <div class="komoditas-name">${k.name}</div>
+      <div style="font-size:.78rem;color:var(--olive-mid)">Klik untuk detail ↓</div>
+      <div class="komoditas-detail">
+        <div class="stat-row"><span class="stat-label">🏆 Produksi tertinggi</span><span class="stat-val">${k.tertinggi}</span></div>
+        <div class="stat-row"><span class="stat-label">📉 Produksi terendah</span><span class="stat-val">${k.terendah}</span></div>
+        <div class="stat-row"><span class="stat-label">📊 Rata-rata produksi</span><span class="stat-val">${k.rata}</span></div>
+      </div>`;
+    div.addEventListener('click', () => div.classList.toggle('active'));
+    grid.appendChild(div);
+  });
+}
+renderKomoditas();
+document.getElementById('komoditas-tabs').addEventListener('click', e => {
+  if (!e.target.classList.contains('tab-btn')) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderKomoditas(e.target.dataset.filter);
+});
+</script>
+</body>
+</html>
