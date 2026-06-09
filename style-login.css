@@ -1,0 +1,85 @@
+/* Styling Utama Halaman */
+.navbar {
+    list-style-type: none;
+    background-color: #f5ffd5;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Noto Serif';
+    font-weight: bold;
+}
+
+body {
+    background-color: #f9ffe6;
+    font-family: 'Noto Serif', serif;
+    padding-top: 100px; /* Memberi ruang untuk navbar fixed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container untuk Box Login/Register */
+.auth-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    margin: 20px;
+    text-align: center;
+}
+
+/* Judul */
+h2 {
+    color: #465a33;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Noto Serif', serif;
+}
+
+input:focus {
+    border-color: #465a33;
+    outline: none;
+    box-shadow: 0 0 5px rgba(70, 90, 51, 0.2);
+}
+
+/* Button */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #465a33;
+    color: #f9ffe6;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #d5f46f;
+    color: #465a33;
+}
+
+/* Link Navigasi (Login/Register/Logout) */
+a {
+    color: #465a33;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #8fa07e;
+}
